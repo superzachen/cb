@@ -37,11 +37,28 @@ def ceaser_decrypt(input_str: str, shift: int) -> str:
 
 def ceaser(input: str, shift: int = 0) -> str:
     if shift == 0:
+        dict_set = load_eng_dict()
         for i in range(25):
             plain_text = ceaser_decrypt(input, i + 1)
-            print(f"{i + 1}: {plain_text}")
+            words = plain_text.split(" ")
+            hit_count = 0
+            for w in words:
+                if w.lower() in dict_set:
+                    hit_count +=1
+            hit_rate = hit_count / len(words)
+            if hit_rate > 0.9:
+                print(f"{i + 1}: {plain_text}")
     else:
         print(ceaser_decrypt(input, shift % 26))
+    
+def load_eng_dict() -> set:
+    import pathlib
+
+    myset = set()
+    p = pathlib.Path("./words.txt")
+    for line in p.read_text().split("\n"):
+        myset.add(line.lower())
+    return myset
 
 
 if __name__ == "__main__":
