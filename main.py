@@ -1,5 +1,5 @@
 import typer  # noqa: F401
-
+app = typer.Typer()
 
 def ceaser_decrypt(input_str: str, shift: int) -> str:
     """
@@ -34,7 +34,7 @@ def ceaser_decrypt(input_str: str, shift: int) -> str:
 
     return decrypted_text
 
-
+@app.command()
 def ceaser(input: str, shift: int = 0) -> str:
     if shift == 0:
         dict_set = load_eng_dict()
@@ -60,9 +60,15 @@ def load_eng_dict() -> set:
         myset.add(line.lower())
     return myset
 
+@app.command()
+def atbash(input: str) -> str:
+    output = []
+    for i in input:
+        change = ord(i) - ord('a')
+        output.append(chr(ord('z') - change))
+    print(''.join(output))
 
 if __name__ == "__main__":
-    typer.run(ceaser)
-
+    app()
 
     
