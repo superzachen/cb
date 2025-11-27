@@ -108,7 +108,19 @@ def cb55(input:str, pob_key:str) -> str:
     for combo in ck_combos:
         if combo in dict_set:
             ck_words.append(combo)
-    print(ck_set, rk_set)
+    pos_ans = []
+    for rk in rk_words:
+        for ck in ck_words:
+            ans = []
+            for tok in token_list:
+                r_idx = rk.find(tok[0])
+                c_idx = ck.find(tok[1])
+                ans.append(board[r_idx][c_idx])
+            ans = "".join(ans)
+            pos_ans.append(ans)
+    for ans in pos_ans:
+        print(ans)
+
 
 
 if __name__ == "__main__":
